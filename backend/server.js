@@ -1,7 +1,10 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
-const {errorHandler} = require('./middlewares/errorMiddleware')
+const colors = require('colors')
+const {errorHandler} = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 const port = process.env.port || 5000
+connectDB()
 //  initialize server.
 const app = express()
 //  apply middleware in order to parsing http body by json and urlencoded.
