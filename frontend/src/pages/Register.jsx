@@ -1,6 +1,11 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { FaUser } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { register, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 function Register() {
     const [formData, setFormData] = useState({
         name: '',
@@ -9,14 +14,43 @@ function Register() {
         comfirmation: '',
     })
     const { name, email, password, comfirmation } = formData
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user, isLoading, isSuccess, isError, message } = useSelector(
+        (state) => state.auth
+    )
+    useEffect(()=>{
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess||user){
+            navigate('/')
+        }
+        dispatch(reset())
+    },[user,isError,isSuccess,message,navigate,dispatch])
     const onChnage = (e) => {
-      setFormData((prevState)=>({
-        ...prevState,
-        [e.target.name]:e.target.value
-      }))
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
     }
     const onSubmit = (e) => {
-      e.preventDefault()
+        e.preventDefault()
+        if (password !== comfirmation) {
+            toast.error('Password do not match')
+        } else {
+            const userData = {
+                name,
+                email,
+                password,
+            }
+
+            dispatch(register(userData))
+        }
+    }
+
+    if (isLoading){
+        return <Spinner/>
     }
     return (
         <>
@@ -52,7 +86,7 @@ function Register() {
                     </div>
                     <div className="form-group">
                         <input
-                            type="text"
+                            type="password"
                             className="form-control"
                             id="password"
                             name="password"
@@ -63,10 +97,10 @@ function Register() {
                     </div>
                     <div className="form-group">
                         <input
-                            type="text"
+                            type="password"
                             className="form-control"
-                            id="comfirm"
-                            name="comfirm"
+                            id="comfirmation"
+                            name="comfirmation"
                             value={comfirmation}
                             placeholder="Comfirm your password again"
                             onChange={onChnage}

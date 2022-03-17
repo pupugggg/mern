@@ -1,13 +1,36 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { login, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 function Login() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     })
     const { email, password} = formData
-    const onChnage = (e) => {
+
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user, isLoading, isSuccess, isError, message } = useSelector(
+        (state) => state.auth
+    )
+    useEffect(()=>{
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess||user){
+            navigate('/')
+        }
+        dispatch(reset())
+    },[user,isError,isSuccess,message,navigate,dispatch])
+
+
+        const onChnage = (e) => {
       setFormData((prevState)=>({
         ...prevState,
         [e.target.name]:e.target.value
@@ -15,7 +38,16 @@ function Login() {
     }
     const onSubmit = (e) => {
       e.preventDefault()
+      const userData = {
+          email,
+          password
+      }
+      dispatch(login(userData))
     }
+    if (isLoading){
+        return <Spinner/>
+    }
+
     return (
         <>
             <section className="heading">
@@ -39,7 +71,7 @@ function Login() {
                     </div>
                     <div className="form-group">
                         <input
-                            type="text"
+                            type="password"
                             className="form-control"
                             id="password"
                             name="password"
