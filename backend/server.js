@@ -10,13 +10,13 @@ const port = process.env.port || 5000
 connectDB()
 //  initialize server.
 const app = express()
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 
-    next();
-  });
+//     next();
+//   });
 //  apply middleware in order to parsing http body by json and urlencoded.
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
