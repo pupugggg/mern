@@ -6,7 +6,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const cors = require('cors')
 const { sendfile } = require('express/lib/response')
-const port = (process.env.PORT)
+const port = (process.env.PORT||5000)
 connectDB()
 //  initialize server.
 const app = express()
