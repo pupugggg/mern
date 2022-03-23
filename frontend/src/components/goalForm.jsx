@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createGoal } from '../features/goals/goalSlice'
-function GoalForm() {
+function Goalform() {
     const [text, setText] = useState('')
     const dispatch = useDispatch()
     const onSubmit = (e) => {
@@ -35,4 +35,4 @@ function GoalForm() {
     )
 }
 
-export default GoalForm
+export default Goalform
