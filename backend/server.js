@@ -6,17 +6,11 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const cors = require('cors')
 const { sendfile } = require('express/lib/response')
-const port = (process.env.PORT || 5000)
+const port = (process.env.PORT)
 connectDB()
 //  initialize server.
 const app = express()
- app.use(function(req, res, next) {
-     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-
-     next();
-   });
+app.use(cors())
 //  apply middleware in order to parsing http body by json and urlencoded.
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
