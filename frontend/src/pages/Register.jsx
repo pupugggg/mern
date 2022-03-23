@@ -19,15 +19,15 @@ function Register() {
     const { user, isLoading, isSuccess, isError, message } = useSelector(
         (state) => state.auth
     )
-    useEffect(()=>{
-        if(isError){
+    useEffect(() => {
+        if (isError) {
             toast.error(message)
         }
-        if(isSuccess||user){
+        if (isSuccess || user) {
             navigate('/')
         }
         dispatch(reset())
-    },[user,isError,isSuccess,message,navigate,dispatch])
+    }, [user, isError, isSuccess, message, navigate, dispatch])
     const onChnage = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -49,8 +49,8 @@ function Register() {
         }
     }
 
-    if (isLoading){
-        return <Spinner/>
+    if (isLoading) {
+        return <Spinner />
     }
     return (
         <>

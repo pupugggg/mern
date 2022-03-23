@@ -11,41 +11,39 @@ function Login() {
         email: '',
         password: '',
     })
-    const { email, password} = formData
-
+    const { email, password } = formData
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user, isLoading, isSuccess, isError, message } = useSelector(
         (state) => state.auth
     )
-    useEffect(()=>{
-        if(isError){
+    useEffect(() => {
+        if (isError) {
             toast.error(message)
         }
-        if(isSuccess||user){
+        if (isSuccess || user) {
             navigate('/')
         }
         dispatch(reset())
-    },[user,isError,isSuccess,message,navigate,dispatch])
+    }, [user, isError, isSuccess, message, navigate, dispatch])
 
-
-        const onChnage = (e) => {
-      setFormData((prevState)=>({
-        ...prevState,
-        [e.target.name]:e.target.value
-      }))
+    const onChnage = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
     }
     const onSubmit = (e) => {
-      e.preventDefault()
-      const userData = {
-          email,
-          password
-      }
-      dispatch(login(userData))
+        e.preventDefault()
+        const userData = {
+            email,
+            password,
+        }
+        dispatch(login(userData))
     }
-    if (isLoading){
-        return <Spinner/>
+    if (isLoading) {
+        return <Spinner />
     }
 
     return (
