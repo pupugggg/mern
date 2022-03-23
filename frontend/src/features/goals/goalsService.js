@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `http://localhost:${process.env.PORT}/api/goals/`
+const API_URL = `/api/goals/`
 
 const  createGoal = async (goalData,token) =>{
     const config = {
